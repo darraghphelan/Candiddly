@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "702735369828",
+    "firebase_url": "https://candiddly123.firebaseio.com",
+    "project_id": "candiddly123",
+    "storage_bucket": "candiddly123.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702735369828:android:bb262cc1563187e3e18171",
+        "android_client_info": {
+          "package_name": "com.example.candiddly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702735369828-b615mjs1hscocgd9j2dkvlpi5k4hh22h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.candiddly",
+            "certificate_hash": "31d9b3dc1f65b982769b9375c693670b68ce6695"
+          }
+        },
+        {
+          "client_id": "702735369828-pptnpkrf2oml0vsdoq4j02i7scun3cjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiuQSM330rkon13ZfgObzLvfHLeTxatJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702735369828-pptnpkrf2oml0vsdoq4j02i7scun3cjr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
