@@ -7,29 +7,43 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/mainUpdatePasswordButton"
+        android:id="@+id/mainFriendsButton"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="#FFBC1F"
-        android:text="@string/update_pass"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/logout_btn"
+        android:text="@string/friends"
+        app:layout_constraintBottom_toTopOf="@+id/mainUpdatePasswordButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/logout_btn"
+        android:id="@+id/mainUpdatePasswordButton"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="#FFBC1F"
-        android:text="@string/logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="@string/update_pass"
+        app:layout_constraintBottom_toTopOf="@+id/mainLogoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/mainLogoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="#FFBC1F"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

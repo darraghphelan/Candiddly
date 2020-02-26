@@ -1,19 +1,24 @@
 package com.example.candiddly
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private val TAG = "RegisterActivity"
 
+    private lateinit var auth: FirebaseAuth
+    private val db = FirebaseFirestore.getInstance()
+
+    private lateinit var usernameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
 
@@ -26,6 +31,7 @@ class RegisterActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        usernameEditText = findViewById(R.id.registerUsernameEditText)
         emailEditText = findViewById(R.id.registerEmailEditText)
         passwordEditText = findViewById(R.id.registerPasswordEditText)
 
@@ -33,14 +39,35 @@ class RegisterActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.registerRegisterButton)
 
         registerButton.setOnClickListener{
-            var email: String = emailEditText.text.toString()
-            var password: String = passwordEditText.text.toString()
+            val username: String = usernameEditText.text.toString()
+            val email: String = emailEditText.text.toString()
+            val password: String = passwordEditText.text.toString()
+
+            //val userClass = User(username, email)
 
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show()
             } else{
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener{ task ->
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this
+                ) { task ->
                     if(task.isSuccessful){
+
+                        val users = db.collection("users")
+                        val currentUser = FirebaseAuth.getInstance().currentUser
+
+                        val user = hashMapOf(
+                            "email" to email,
+                            "username" to username
+                        )
+
+                        users.document(currentUser?.uid.toString()).set(user)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d(TAG, "DocumentSnapshot added with ID: $documentReference")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                            }
+
                         Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
@@ -48,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
                     }else {
                         Toast.makeText(this, "Registration Failed", Toast.LENGTH_LONG).show()
                     }
-                })
+                }
             }
         }
 
