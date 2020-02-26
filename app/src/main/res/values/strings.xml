@@ -18,4 +18,6 @@
     <string name="search_hint">Find friends</string>
     <string name="friends">Friends</string>
     <string name="username_colon">Username:</string>
+    <string name="sent">Sent</string>
+    <string name="received">Received</string>
 </resources>
