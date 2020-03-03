@@ -20,4 +20,5 @@
     <string name="username_colon">Username:</string>
     <string name="sent">Sent</string>
     <string name="received">Received</string>
+    <string name="camera">Camera</string>
 </resources>

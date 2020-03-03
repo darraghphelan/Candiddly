@@ -1,39 +1,31 @@
 package com.example.candiddly
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
 
-    private lateinit var auth: FirebaseAuth
-    private val db = FirebaseFirestore.getInstance()
-    private val user = FirebaseAuth.getInstance().currentUser
+    private var auth = FirebaseAuth.getInstance()
 
     private lateinit var logoutButton: Button
     private lateinit var friendButton: Button
     private lateinit var updatePasswordButton: Button
-    private lateinit var usernameTextView: TextView
+    private lateinit var cameraButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        auth = FirebaseAuth.getInstance()
-
-        val docRef = db.collection("users").document(user?.uid.toString())
-
-
         friendButton = findViewById(R.id.mainFriendsButton)
         logoutButton = findViewById(R.id.mainLogoutButton)
         updatePasswordButton = findViewById(R.id.mainUpdatePasswordButton)
+        cameraButton = findViewById(R.id.mainCameraButton)
 
 //        db.collection("users")
 //            .whereEqualTo("username", "Diddily")
@@ -107,7 +99,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
+        cameraButton.setOnClickListener {
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }
