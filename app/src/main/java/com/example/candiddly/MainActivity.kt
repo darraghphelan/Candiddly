@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var friendButton: Button
     private lateinit var updatePasswordButton: Button
     private lateinit var cameraButton: Button
+    private lateinit var viewerButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         logoutButton = findViewById(R.id.mainLogoutButton)
         updatePasswordButton = findViewById(R.id.mainUpdatePasswordButton)
         cameraButton = findViewById(R.id.mainCameraButton)
+        viewerButton = findViewById(R.id.mainViewerButton)
 
 //        db.collection("users")
 //            .whereEqualTo("username", "Diddily")
@@ -101,6 +103,11 @@ class MainActivity : AppCompatActivity() {
 
         cameraButton.setOnClickListener {
             val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+        }
+
+        viewerButton.setOnClickListener {
+            val intent = Intent(this, ViewerActivity::class.java)
             startActivity(intent)
         }
     }

@@ -41,7 +41,6 @@ class CameraActivity : AppCompatActivity() {
 
     private val photoListener = View.OnClickListener { view ->
             cameraKitView!!.captureImage { cameraKitView, photo ->
-                //val savedPhoto = File(Environment.getExternalStorageDirectory(), "photo.jpg")
                 try {
                     @SuppressLint("SimpleDateFormat")
                     val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")

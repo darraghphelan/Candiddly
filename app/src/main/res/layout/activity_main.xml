@@ -7,6 +7,21 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/mainViewerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="#FFBC1F"
+        android:text="@string/view_your_pictures"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/mainCameraButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/mainCameraButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

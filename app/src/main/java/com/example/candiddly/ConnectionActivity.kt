@@ -1,7 +1,6 @@
 package com.example.candiddly
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class ConnectionActivity : AppCompatActivity() {
-    private val TAG = "ConnectionActivity"
+    //private val TAG = "ConnectionActivity"
 
     private val db = FirebaseFirestore.getInstance()
     private val user = FirebaseAuth.getInstance().currentUser
@@ -26,7 +25,7 @@ class ConnectionActivity : AppCompatActivity() {
         recyclerFriendsButton.isEnabled = false
         recyclerFriendsButton.isClickable = false
         lifecycleScope.launch {
-            initView("friends")
+            initView()
         }
 
         recyclerFriendsButton.setOnClickListener {
@@ -64,7 +63,7 @@ class ConnectionActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun initView(requestType: String) {
+    private suspend fun initView() {
         recyclerViewFriends.layoutManager = LinearLayoutManager(this)
         recyclerViewFriends.addItemDecoration(VerticalSpaceItemDecoration(48))
         recyclerViewFriends.addItemDecoration(DividerItemDecoration(this))
@@ -78,7 +77,6 @@ class ConnectionActivity : AppCompatActivity() {
     }
 
     private suspend fun generateData(requestType: String): List<User> {
-
         connectionList = getConnectionList(requestType)
         return connectionList
     }
@@ -94,7 +92,6 @@ class ConnectionActivity : AppCompatActivity() {
             val user = doc.toObject(User::class.java)
             connectionList.add(user)
         }
-        Log.d(TAG, "CONNECTIONLIST = $connectionList")
         return connectionList
     }
 
@@ -115,7 +112,6 @@ class ConnectionActivity : AppCompatActivity() {
                 idList = document.toObject(IDList::class.java)?.sent!!
             }
         }
-        Log.d(TAG, "IDLIST = $idList")
         return idList
     }
 }
