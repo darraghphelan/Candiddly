@@ -11,13 +11,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class ConnectionActivity : AppCompatActivity() {
-    //private val TAG = "ConnectionActivity"
+    private val TAG = "ConnectionActivity"
 
     private val db = FirebaseFirestore.getInstance()
     private val user = FirebaseAuth.getInstance().currentUser
 
     private var idList = listOf<String>()
     private var connectionList = mutableListOf<User>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,21 @@ class ConnectionActivity : AppCompatActivity() {
         recyclerFriendsButton.isClickable = false
         lifecycleScope.launch {
             initView()
+        }
+
+        itemsswipetorefresh.setOnRefreshListener {
+            when {
+                !recyclerFriendsButton.isEnabled -> {
+                    recyclerFriendsButton.performClick()
+                }
+                !recyclerReceivedButton.isEnabled -> {
+                    recyclerReceivedButton.performClick()
+                }
+                !recyclerSentButton.isEnabled -> {
+                    recyclerSentButton.performClick()
+                }
+            }
+            itemsswipetorefresh.isRefreshing = false
         }
 
         recyclerFriendsButton.setOnClickListener {
