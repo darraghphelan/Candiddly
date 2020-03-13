@@ -8,13 +8,13 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/itemsswipetorefresh"
-        android:layout_width="wrap_content"
-        android:layout_height="0px"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/recyclerReceivedButton">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFriends"
@@ -30,7 +30,21 @@
 
 
     <Button
+        android:id="@+id/recyclerReceivedButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFBC1F"
+        android:text="@string/received"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toStartOf="@+id/recyclerSentButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/recyclerFriendsButton"
+        app:layout_constraintTop_toTopOf="@+id/recyclerFriendsButton" />
+
+    <Button
         android:id="@+id/recyclerSentButton"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FFBC1F"
@@ -43,26 +57,38 @@
 
     <Button
         android:id="@+id/recyclerFriendsButton"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="#FFBC1F"
         android:text="@string/friends"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintEnd_toStartOf="@+id/recyclerReceivedButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connectionsUsernameEditText" />
+
+    <EditText
+        android:id="@+id/connectionsUsernameEditText"
+        android:layout_width="307dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/friend_s_username"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/recyclerReceivedButton"
-        android:layout_width="0dp"
+        android:id="@+id/connectionsAddFriendButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="#FFBC1F"
-        android:text="@string/received"
+        android:text="@string/add_friend"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintEnd_toStartOf="@+id/recyclerSentButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/recyclerFriendsButton"
-        app:layout_constraintTop_toTopOf="@+id/recyclerFriendsButton" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

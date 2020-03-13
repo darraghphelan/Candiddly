@@ -1,14 +1,13 @@
 package com.example.candiddly
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -38,13 +37,13 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         loginButton.setOnClickListener {
-            var email: String = emailEditText.text.toString()
-            var password: String = passwordEditText.text.toString()
+            val email: String = emailEditText.text.toString()
+            val password: String = passwordEditText.text.toString()
 
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 Toast.makeText(this@LoginActivity, "Please fill all the fields", Toast.LENGTH_LONG).show()
             } else{
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener { task ->
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                     if(task.isSuccessful) {
                         Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
                         val intent = Intent(this, MainActivity::class.java)
@@ -53,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                     }else {
                         Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
                     }
-                })
+                }
             }
         }
 
@@ -63,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        forgotPasswordTextView!!
+        forgotPasswordTextView
             .setOnClickListener { startActivity(Intent(this@LoginActivity,
                 ForgotPasswordActivity::class.java)) }
     }

@@ -24,4 +24,6 @@
     <string name="save">Save</string>
     <string name="view_your_pictures">View Your Pictures</string>
     <string name="image_viewer">Image viewer</string>
+    <string name="friend_s_username">Friend\'s Username...</string>
+    <string name="add_friend">Add Friend</string>
 </resources>
