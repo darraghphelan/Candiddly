@@ -27,4 +27,10 @@
     <string name="friend_s_username">Friend\'s Username…</string>
     <string name="add_friend">Add Friend</string>
     <string name="start_an_event">Start an event</string>
+    <string name="i_am_the_host">I am the host</string>
+    <string name="discover_my_friend">Discover my friend</string>
+    <string name="you_will_be_taking_candids_of">You will be taking candids of...</string>
+    <string name="enter_username_of_next_group_member">Enter username of next group member</string>
+    <string name="add">Add!</string>
+    <string name="start">Start!</string>
 </resources>
