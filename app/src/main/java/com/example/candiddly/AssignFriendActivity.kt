@@ -1,5 +1,6 @@
 package com.example.candiddly
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ class AssignFriendActivity : AppCompatActivity() {
     private val docRefUsers = db.collection("users")
     private lateinit var member: User
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_assign_friends)

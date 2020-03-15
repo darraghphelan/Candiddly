@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.list_item_connections.view.*
 
 class ConnectionListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindView(user: User) {
-        itemView.textUsername.text = user.username
+        itemView.connectionsUsernameTextView.text = user.username
     }
 
 }

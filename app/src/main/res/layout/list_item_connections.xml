@@ -8,16 +8,18 @@
     android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/textUsername"
+        android:id="@+id/connectionsUsernameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:textColor="@android:color/black"
         android:textSize="20sp"
+        android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Avengers" />
+        tools:text="Avengers"
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
