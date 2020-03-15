@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var updatePasswordButton: Button
     private lateinit var cameraButton: Button
     private lateinit var viewerButton: Button
+    private lateinit var startEventButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         updatePasswordButton = findViewById(R.id.mainUpdatePasswordButton)
         cameraButton = findViewById(R.id.mainCameraButton)
         viewerButton = findViewById(R.id.mainViewerButton)
+        startEventButton = findViewById(R.id.mainStartEventButton)
 
 //        db.collection("users")
 //            .whereEqualTo("username", "Diddily")
@@ -108,6 +110,11 @@ class MainActivity : AppCompatActivity() {
 
         viewerButton.setOnClickListener {
             val intent = Intent(this, ViewerActivity::class.java)
+            startActivity(intent)
+        }
+
+        startEventButton.setOnClickListener {
+            val intent = Intent(this, AssignFriendActivity::class.java)
             startActivity(intent)
         }
     }

@@ -96,9 +96,15 @@ class RegisterActivity : AppCompatActivity() {
                         Log.w(TAG, "Error adding document", e)
                     }
 
-                val connections =
-                    users.document(currentUser?.uid.toString()).collection("connections")
+                val connections = users.document(currentUser?.uid.toString()).collection("connections")
                 val gallery = users.document(currentUser?.uid.toString()).collection("gallery")
+                val events = users.document(currentUser?.uid.toString()).collection("events")
+
+
+                val eventsData = hashMapOf("group" to arrayListOf(""))
+                events.document("group").set(eventsData)
+                db.collection("users").document(currentUser?.uid.toString()).collection("events").document("group").update("group", FieldValue.arrayRemove(""))
+
 
                 val friendsData = hashMapOf("friends" to arrayListOf(""))
                 connections.document("friends").set(friendsData)
