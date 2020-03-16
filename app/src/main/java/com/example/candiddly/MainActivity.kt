@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         cameraButton.setOnClickListener {
-            val intent = Intent(this, CameraActivity::class.java)
+            val intent = Intent(this, SenderActivity::class.java)
             startActivity(intent)
         }
 

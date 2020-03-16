@@ -40,6 +40,8 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private val photoListener = View.OnClickListener { view ->
+        val receiverID: String = intent.getStringExtra("ReceiverID")
+
             cameraKitView!!.captureImage { cameraKitView, photo ->
                 try {
                     @SuppressLint("SimpleDateFormat")
@@ -52,7 +54,7 @@ class CameraActivity : AppCompatActivity() {
                     uploadTask
                         .addOnSuccessListener {
                             testImagesRef.downloadUrl.addOnSuccessListener { downloadURL ->
-                                db.collection("users").document(user?.uid.toString()).collection("gallery").document("images").update("images", FieldValue.arrayUnion("$downloadURL"))
+                                db.collection("users").document(receiverID).collection("gallery").document("images").update("images", FieldValue.arrayUnion("$downloadURL"))
                             }
                     }
                         .addOnFailureListener {
