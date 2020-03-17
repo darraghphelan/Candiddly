@@ -1,6 +1,7 @@
 package com.example.candiddly
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
@@ -40,16 +41,16 @@ class LoginActivity : AppCompatActivity() {
             val password: String = passwordEditText.text.toString()
 
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                displayError("Please fill all the fields")
+                displayError("Please fill all the fields", "#ffcc0000")
             } else{
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                     if(task.isSuccessful) {
-                        displayError("Successfully Logged In")
+                        displayError("Successfully Logged In", "#32CD32")
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }else {
-                        displayError("Login Failed")
+                        displayError("Login Failed", "#ffcc0000")
                     }
                 }
             }
@@ -68,8 +69,8 @@ class LoginActivity : AppCompatActivity() {
                 ForgotPasswordActivity::class.java)) }
     }
 
-    private fun displayError(message: String) {
+    private fun displayError(message: String, color: String) {
         errorTextView.text = message
-
+        errorTextView.setTextColor(Color.parseColor(color))
     }
 }

@@ -35,4 +35,5 @@
     <string name="start">Start!</string>
     <string name="take_picture">Take Picture</string>
     <string name="who_do_you_want_to_send_to">Who do you want to send to?</string>
+    <string name="connections">Connections</string>
 </resources>

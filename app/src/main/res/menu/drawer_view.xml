@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mainStartEventButton"
+            android:title="@string/start_an_event" />
+        <item
+            android:id="@+id/mainViewPicturesButton"
+            android:title="@string/view_your_pictures" />
+        <item
+            android:id="@+id/mainConnectionsButton"
+            android:title="@string/connections" />
+        <item
+            android:id="@+id/mainUpdatePasswordButton"
+            android:title="@string/update_pass" />
+        <item
+            android:id="@+id/mainLogoutButton"
+            android:title="@string/logout" />
+    </group>
+</menu>

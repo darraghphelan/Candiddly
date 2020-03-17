@@ -1,6 +1,7 @@
 package com.example.candiddly
 
 import Classes.*
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -70,14 +71,14 @@ class ConnectionActivity : AppCompatActivity() {
 
             for (user in friendList) {
                 if (user.username == username) {
-                    displayError("${user.username} is already a friend")
+                    displayError("${user.username} is already a friend", "#ffcc0000")
                     return@setOnClickListener
                 }
             }
 
             for (user in sentList) {
                 if (user.username == username) {
-                    displayError("${user.username} friend request already sent")
+                    displayError("${user.username} friend request already sent", "#ffcc0000")
                     return@setOnClickListener
                 }
             }
@@ -89,7 +90,7 @@ class ConnectionActivity : AppCompatActivity() {
                     .get()
                     .await()
                 if (userDoc.isEmpty) {
-                    displayError("No user $username exists, please try again")
+                    displayError("No user $username exists, please try again", "#ffcc0000")
                     return@launch
                 }
 
@@ -118,6 +119,7 @@ class ConnectionActivity : AppCompatActivity() {
                             .collection("connections")
                             .document("sent")
                             .update("sent", FieldValue.arrayRemove(currentUser?.uid.toString()))
+                        return@launch
                     }
                 }
 
@@ -129,7 +131,7 @@ class ConnectionActivity : AppCompatActivity() {
                             .document("sent")
                             .update("sent", FieldValue.arrayUnion(user.id))
 
-                        displayError("Sent user ${user.username} a friend request")
+                        displayError("Sent user ${user.username} a friend request", "#32CD32")
 
                         db.collection("users")
                             .document(user.id)
@@ -254,7 +256,8 @@ class ConnectionActivity : AppCompatActivity() {
         return idList
     }
 
-    private fun displayError(message: String) {
+    private fun displayError(message: String, color: String) {
         errorTextView.text = message
+        errorTextView.setTextColor(Color.parseColor(color))
     }
 }

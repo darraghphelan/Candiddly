@@ -35,7 +35,7 @@ class CameraActivity : AppCompatActivity() {
         setContentView(R.layout.activity_camera)
         cameraKitView = findViewById(R.id.camera)
 
-        photoButton = findViewById(R.id.photoButton)
+        photoButton = findViewById(R.id.mainCameraButton)
         photoButton.setOnClickListener(photoListener)
     }
 

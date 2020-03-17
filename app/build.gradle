@@ -67,6 +67,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:2.1.0'
 
     implementation 'com.firebaseui:firebase-ui-storage:6.2.0'
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

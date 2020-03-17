@@ -139,6 +139,4 @@ class ViewerActivity : AppCompatActivity() {
             idList = document.toObject(IDList::class.java)?.images!!
             return idList
     }
-
-
 }
