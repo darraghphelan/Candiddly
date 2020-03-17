@@ -1,7 +1,6 @@
-package com.example.candiddly
+package Classes
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat

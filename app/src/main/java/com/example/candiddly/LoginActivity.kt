@@ -6,9 +6,9 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -17,7 +17,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
 
-    private lateinit var registerButton: Button
     private lateinit var loginButton: Button
 
     private lateinit var forgotPasswordTextView: TextView
@@ -29,7 +28,6 @@ class LoginActivity : AppCompatActivity() {
         emailEditText = findViewById(R.id.loginEmailEditText)
         passwordEditText = findViewById(R.id.loginPasswordEditText)
 
-        registerButton = findViewById(R.id.loginRegisterButton)
         loginButton = findViewById(R.id.loginLoginButton)
 
         forgotPasswordTextView = findViewById(R.id.loginForgotPasswordTextView)
@@ -37,33 +35,41 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         loginButton.setOnClickListener {
+            errorTextView.text = ""
             val email: String = emailEditText.text.toString()
             val password: String = passwordEditText.text.toString()
 
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                Toast.makeText(this@LoginActivity, "Please fill all the fields", Toast.LENGTH_LONG).show()
+                displayError("Please fill all the fields")
             } else{
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                     if(task.isSuccessful) {
-                        Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
+                        displayError("Successfully Logged In")
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }else {
-                        Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
+                        displayError("Login Failed")
                     }
                 }
             }
         }
 
-        registerButton.setOnClickListener{
+        loginRegisterTextView.setOnClickListener{
+            errorTextView.text = ""
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        forgotPasswordTextView
-            .setOnClickListener { startActivity(Intent(this@LoginActivity,
+        forgotPasswordTextView.setOnClickListener {
+            errorTextView.text = ""
+            startActivity(Intent(this@LoginActivity,
                 ForgotPasswordActivity::class.java)) }
+    }
+
+    private fun displayError(message: String) {
+        errorTextView.text = message
+
     }
 }

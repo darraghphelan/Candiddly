@@ -1,4 +1,4 @@
-package com.example.candiddly
+package Classes
 
 import android.graphics.drawable.Drawable
 

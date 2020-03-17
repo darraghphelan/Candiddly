@@ -1,5 +1,6 @@
 package com.example.candiddly
 
+import Classes.IDList
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_viewer.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -139,4 +139,6 @@ class ViewerActivity : AppCompatActivity() {
             idList = document.toObject(IDList::class.java)?.images!!
             return idList
     }
+
+
 }

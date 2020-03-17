@@ -1,8 +1,9 @@
-package com.example.candiddly
+package Classes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.candiddly.R
 
 class ConnectionListHeaderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -10,10 +11,34 @@ class ConnectionListHeaderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            CellType.HEADER.ordinal -> TopViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_recycler_header, parent, false))
-            CellType.CONTENT.ordinal -> ConnectionListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_connections, parent, false))
-            CellType.FOOTER.ordinal -> BottomViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_recycler_header, parent, false))
-            else -> ConnectionListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_connections, parent, false))
+            CellType.HEADER.ordinal -> TopViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.list_item_recycler_header,
+                    parent,
+                    false
+                )
+            )
+            CellType.CONTENT.ordinal -> ConnectionListViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.list_item_connections,
+                    parent,
+                    false
+                )
+            )
+            CellType.FOOTER.ordinal -> BottomViewHolder(
+                LayoutInflater.from(
+                    parent.context
+                ).inflate(R.layout.list_item_recycler_header, parent, false)
+            )
+            else -> ConnectionListViewHolder(
+                LayoutInflater.from(
+                    parent.context
+                ).inflate(
+                    R.layout.list_item_connections,
+                    parent,
+                    false
+                )
+            )
         }
     }
 

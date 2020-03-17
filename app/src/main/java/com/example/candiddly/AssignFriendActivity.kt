@@ -1,11 +1,11 @@
 package com.example.candiddly
 
+import Classes.IDList
+import Classes.User
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -15,8 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class AssignFriendActivity : AppCompatActivity() {
-    private val TAG = "AssignFriendActivity"
-
     private val db = FirebaseFirestore.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -35,8 +33,9 @@ class AssignFriendActivity : AppCompatActivity() {
             assignFriendMemberButton.isClickable = true
             assignFriendUsernameEditText.visibility = View.VISIBLE
             assignFriendAddButton.visibility = View.VISIBLE
+            assignFriendStartButton.visibility = View.VISIBLE
             assignFriendTextView.visibility = View.GONE
-            assignFriendStartButton.visibility = View.GONE
+            errorTextView.text = ""
         }
 
         assignFriendMemberButton.setOnClickListener{
@@ -46,13 +45,15 @@ class AssignFriendActivity : AppCompatActivity() {
             assignFriendMemberButton.isClickable = false
             assignFriendUsernameEditText.visibility = View.GONE
             assignFriendAddButton.visibility = View.GONE
+            assignFriendStartButton.visibility = View.GONE
             assignFriendTextView.visibility = View.VISIBLE
-            assignFriendStartButton.visibility = View.VISIBLE
+            errorTextView.text = ""
         }
 
         assignFriendAddButton.setOnClickListener{
             val username = assignFriendUsernameEditText.text.toString()
             assignFriendUsernameEditText.text.clear()
+            errorTextView.text = ""
 
             lifecycleScope.launch {
                 val memberDoc = docRefUsers
@@ -60,7 +61,7 @@ class AssignFriendActivity : AppCompatActivity() {
                     .get()
                     .await()
                 if (memberDoc.isEmpty) {
-                    toastMaker("No user $username exists, please try again")
+                    displayError("No user $username exists, please try again")
                     return@launch
                 } else {
                     for (doc in memberDoc) {
@@ -76,6 +77,7 @@ class AssignFriendActivity : AppCompatActivity() {
         }
 
         assignFriendStartButton.setOnClickListener {
+            errorTextView.text = ""
             var groupList: MutableList<String>
             lifecycleScope.launch {
                 val document = db.collection("users")
@@ -97,10 +99,8 @@ class AssignFriendActivity : AppCompatActivity() {
                     val nestedData = hashMapOf(
                         "group" to groupList
                     )
-                    Log.d(TAG, "grouplist = $groupList")
 
                     for (user in groupList) {
-                        Log.d(TAG, "user id = $user")
                         db.collection("users")
                             .document(user)
                             .collection("events")
@@ -126,6 +126,12 @@ class AssignFriendActivity : AppCompatActivity() {
             }
         }
 
+        itemsswipetorefresh.setOnRefreshListener {
+            errorTextView.text = ""
+            assignFriendStartButton.performClick()
+            itemsswipetorefresh.isRefreshing = false
+        }
+
         assignFriendHostButton.performClick()
     }
 
@@ -142,8 +148,7 @@ class AssignFriendActivity : AppCompatActivity() {
         docRef.update(updates)
     }
 
-
-    private fun toastMaker(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    private fun displayError(message: String) {
+        errorTextView.text = message
     }
 }

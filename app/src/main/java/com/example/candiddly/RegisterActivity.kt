@@ -1,17 +1,18 @@
 package com.example.candiddly
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -55,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString()
 
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                toastMaker("Please fill all the fields")
+                displayError("Please fill all the fields", "#ffcc0000")
             } else {
                 lifecycleScope.launch {
                     val docRefUsers = db.collection("users")
@@ -66,7 +67,7 @@ class RegisterActivity : AppCompatActivity() {
                     if (userDocs.isEmpty) {
                         registration(email, password, username)
                     } else {
-                        toastMaker("Username taken")
+                        displayError("Username taken", "#ffcc0000")
                     }
                 }
             }
@@ -89,12 +90,6 @@ class RegisterActivity : AppCompatActivity() {
                 )
 
                 users.document(currentUser?.uid.toString()).set(user)
-                    .addOnSuccessListener { documentReference ->
-                        Log.d(TAG, "DocumentSnapshot added with ID: $documentReference")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(TAG, "Error adding document", e)
-                    }
 
                 val connections = users.document(currentUser?.uid.toString()).collection("connections")
                 val gallery = users.document(currentUser?.uid.toString()).collection("gallery")
@@ -119,17 +114,18 @@ class RegisterActivity : AppCompatActivity() {
                 gallery.document("images").set(imageUrls)
                 db.collection("users").document(currentUser?.uid.toString()).collection("gallery").document("images").update("images", FieldValue.arrayRemove(""))
 
-                toastMaker("Successfully Registered")
+                displayError("Successfully Registered", "#32CD32")
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                toastMaker("Registration Failed")
+                displayError("Registration Failed", "#ffcc0000")
             }
         }
     }
 
-    private fun toastMaker(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    private fun displayError(message: String, color: String) {
+        errorTextView.text = message
+        errorTextView.setTextColor(Color.parseColor(color))
     }
 }

@@ -1,9 +1,9 @@
 package com.example.candiddly
 
+import Classes.*
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,22 +60,24 @@ class ConnectionActivity : AppCompatActivity() {
                 }
             }
             itemsswipetorefresh.isRefreshing = false
+            errorTextView.text = ""
         }
 
         addFriendButton.setOnClickListener {
+            errorTextView.text = ""
             val username = usernameEditText.text.toString()
             usernameEditText.text.clear()
 
             for (user in friendList) {
                 if (user.username == username) {
-                    toastMaker("${user.username} is already a friend")
+                    displayError("${user.username} is already a friend")
                     return@setOnClickListener
                 }
             }
 
             for (user in sentList) {
                 if (user.username == username) {
-                    toastMaker("${user.username} friend request already sent")
+                    displayError("${user.username} friend request already sent")
                     return@setOnClickListener
                 }
             }
@@ -87,7 +89,7 @@ class ConnectionActivity : AppCompatActivity() {
                     .get()
                     .await()
                 if (userDoc.isEmpty) {
-                    toastMaker("No user $username exists, please try again")
+                    displayError("No user $username exists, please try again")
                     return@launch
                 }
 
@@ -127,7 +129,7 @@ class ConnectionActivity : AppCompatActivity() {
                             .document("sent")
                             .update("sent", FieldValue.arrayUnion(user.id))
 
-                        toastMaker("Sent user ${user.username} a friend request")
+                        displayError("Sent user ${user.username} a friend request")
 
                         db.collection("users")
                             .document(user.id)
@@ -148,6 +150,7 @@ class ConnectionActivity : AppCompatActivity() {
             recyclerReceivedButton.isClickable = true
             recyclerSentButton.isEnabled = true
             recyclerSentButton.isClickable = true
+            errorTextView.text = ""
         }
         recyclerReceivedButton.setOnClickListener {
             lifecycleScope.launch {
@@ -159,6 +162,7 @@ class ConnectionActivity : AppCompatActivity() {
             recyclerFriendsButton.isClickable = true
             recyclerSentButton.isEnabled = true
             recyclerSentButton.isClickable = true
+            errorTextView.text = ""
         }
         recyclerSentButton.setOnClickListener {
             lifecycleScope.launch {
@@ -170,12 +174,17 @@ class ConnectionActivity : AppCompatActivity() {
             recyclerFriendsButton.isClickable = true
             recyclerReceivedButton.isEnabled = true
             recyclerReceivedButton.isClickable = true
+            errorTextView.text = ""
         }
     }
 
     private suspend fun initView() {
         recyclerViewFriends.layoutManager = LinearLayoutManager(this)
-        recyclerViewFriends.addItemDecoration(VerticalSpaceItemDecoration(48))
+        recyclerViewFriends.addItemDecoration(
+            VerticalSpaceItemDecoration(
+                48
+            )
+        )
         recyclerViewFriends.addItemDecoration(DividerItemDecoration(this))
         getData("friends")
     }
@@ -245,7 +254,7 @@ class ConnectionActivity : AppCompatActivity() {
         return idList
     }
 
-    private fun toastMaker(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    private fun displayError(message: String) {
+        errorTextView.text = message
     }
 }

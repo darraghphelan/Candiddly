@@ -1,4 +1,4 @@
-package com.example.candiddly
+package Classes
 
 data class IDList(
     val friends: List<String>? = null,

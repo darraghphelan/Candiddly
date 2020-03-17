@@ -1,4 +1,4 @@
-package com.example.candiddly
+package Classes
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
