@@ -1,4 +1,4 @@
-package Classes
+package classes
 
 import android.graphics.Rect
 import android.view.View

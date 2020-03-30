@@ -1,6 +1,6 @@
 package com.example.candiddly
 
-import Classes.User
+import classes.User
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -1,6 +1,6 @@
 package com.example.candiddly
 
-import Classes.*
+import classes.*
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class ConnectionActivity : AppCompatActivity() {
-    private val TAG = "ConnectionActivity"
 
     private val db = FirebaseFirestore.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser

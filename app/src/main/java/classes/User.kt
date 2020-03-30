@@ -1,6 +1,4 @@
-package Classes
-
-import android.graphics.drawable.Drawable
+package classes
 
 data class User(var username: String,
                 var email: String,

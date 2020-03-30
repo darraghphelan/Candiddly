@@ -1,6 +1,6 @@
 package com.example.candiddly
 
-import Classes.IDList
+import classes.IDList
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager

@@ -1,20 +1,26 @@
 package com.example.candiddly
 
-import Classes.IDList
-import Classes.User
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import classes.IDList
+import classes.NotificationUtils
+import classes.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_assign_friends.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.*
+
 
 class AssignFriendActivity : AppCompatActivity() {
+
+    private val random = Random()
+
     private val db = FirebaseFirestore.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -124,6 +130,9 @@ class AssignFriendActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            val mNotificationTime = Calendar.getInstance().timeInMillis  + 1200000 + random.nextInt(73-12) * 100000
+            NotificationUtils().setNotification(mNotificationTime, this)
         }
 
         itemsswipetorefresh.setOnRefreshListener {

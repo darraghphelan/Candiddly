@@ -34,6 +34,14 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
+
+        <receiver
+            android:name="classes.AlarmReceiver"
+            android:enabled="true" />
+
+        <service
+            android:name="classes.NotificationService"
+            android:enabled="true" />
     </application>
 
 </manifest>

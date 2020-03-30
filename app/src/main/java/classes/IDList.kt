@@ -1,4 +1,4 @@
-package Classes
+package classes
 
 data class IDList(
     val friends: List<String>? = null,
