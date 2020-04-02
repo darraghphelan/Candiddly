@@ -124,7 +124,7 @@ class ViewerActivity : AppCompatActivity() {
             idList = getImageUrls()
             glide(idList)
         }
-        imageView.setOnClickListener{
+        viewerNextButton.setOnClickListener{
             glide(idList)
         }
     }

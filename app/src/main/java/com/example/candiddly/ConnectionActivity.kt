@@ -1,5 +1,6 @@
 package com.example.candiddly
 
+import android.content.Intent
 import classes.*
 import android.graphics.Color
 import android.os.Bundle
@@ -29,6 +30,9 @@ class ConnectionActivity : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
     private lateinit var addFriendButton: Button
 
+
+    private lateinit var adapter: ConnectionRecyclerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_connections)
@@ -40,8 +44,8 @@ class ConnectionActivity : AppCompatActivity() {
         recyclerFriendsButton.isClickable = false
         lifecycleScope.launch {
             initView()
-            generateData("received")
-            generateData("sent")
+            getConnectionList("received")
+            getConnectionList("sent")
         }
 
         itemsswipetorefresh.setOnRefreshListener {
@@ -70,14 +74,21 @@ class ConnectionActivity : AppCompatActivity() {
 
             for (user in friendList) {
                 if (user.username == username) {
-                    displayError("${user.username} is already a friend", "#ffcc0000")
+                    displayMessage("${user.username} is already a friend", "#ffcc0000")
                     return@setOnClickListener
                 }
             }
 
             for (user in sentList) {
                 if (user.username == username) {
-                    displayError("${user.username} friend request already sent", "#ffcc0000")
+                    displayMessage("${user.username} friend request already sent", "#ffcc0000")
+                    return@setOnClickListener
+                }
+            }
+
+            for (user in receivedList) {
+                if (user.username == username) {
+                    displayMessage("Find the ${user.username} request in 'Received'", "#ffcc0000")
                     return@setOnClickListener
                 }
             }
@@ -89,7 +100,7 @@ class ConnectionActivity : AppCompatActivity() {
                     .get()
                     .await()
                 if (userDoc.isEmpty) {
-                    displayError("No user $username exists, please try again", "#ffcc0000")
+                    displayMessage("No user $username exists, please try again", "#ffcc0000")
                     return@launch
                 }
 
@@ -130,7 +141,7 @@ class ConnectionActivity : AppCompatActivity() {
                             .document("sent")
                             .update("sent", FieldValue.arrayUnion(user.id))
 
-                        displayError("Sent user ${user.username} a friend request", "#32CD32")
+                        displayMessage("Sent user ${user.username} a friend request", "#32CD32")
 
                         db.collection("users")
                             .document(user.id)
@@ -180,25 +191,44 @@ class ConnectionActivity : AppCompatActivity() {
     }
 
     private suspend fun initView() {
-        recyclerViewFriends.layoutManager = LinearLayoutManager(this)
-        recyclerViewFriends.addItemDecoration(
-            VerticalSpaceItemDecoration(
-                48
-            )
-        )
-        recyclerViewFriends.addItemDecoration(DividerItemDecoration(this))
+        connectionsRecyclerView.layoutManager = LinearLayoutManager(this)
+        connectionsRecyclerView.addItemDecoration(VerticalSpaceItemDecoration(48))
+        connectionsRecyclerView.addItemDecoration(DividerItemDecoration(this))
         getData("friends")
     }
 
     private suspend fun getData(requestType: String){
-        val friendListAdapter = ConnectionListHeaderAdapter()
-        recyclerViewFriends.adapter = friendListAdapter
-        friendListAdapter.setFriendList(generateData(requestType))
-    }
+        val connectionList = getConnectionList(requestType)
 
-    private suspend fun generateData(requestType: String): List<User> {
-        connectionList = getConnectionList(requestType)
-        return connectionList
+        when (requestType) {
+            "friends" -> {
+                adapter = ConnectionRecyclerAdapter(connectionList) { user ->
+                val productIntent = Intent(this, CameraActivity::class.java)
+                productIntent.putExtra("ReceiverID", user.id)
+                startActivity(productIntent)
+                }
+            }
+            "received" -> {
+                adapter = ConnectionRecyclerAdapter(connectionList) { user ->
+                val intent = Intent(this, PopUpWindow::class.java)
+                intent.putExtra("popuptext", "Do you want to accept this request?")
+                    intent.putExtra("type", "received")
+                    intent.putExtra("id", user.id)
+                startActivity(intent)
+                }
+            }
+            "sent" -> {
+                adapter = ConnectionRecyclerAdapter(connectionList) { user ->
+                val intent = Intent(this, PopUpWindow::class.java)
+                intent.putExtra("popuptext", "Do you want to delete this request?")
+                    intent.putExtra("type", "sent")
+                    intent.putExtra("id", user.id)
+                startActivity(intent)
+                }
+            }
+        }
+
+        connectionsRecyclerView.adapter = adapter
     }
 
     private suspend fun getConnectionList(requestType: String): MutableList<User> {
@@ -255,7 +285,7 @@ class ConnectionActivity : AppCompatActivity() {
         return idList
     }
 
-    private fun displayError(message: String, color: String) {
+    private fun displayMessage(message: String, color: String) {
         errorTextView.text = message
         errorTextView.setTextColor(Color.parseColor(color))
     }

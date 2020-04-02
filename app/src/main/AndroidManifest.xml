@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SenderActivity" />
+        <activity android:name=".PopUpWindow" />
         <activity android:name=".AssignFriendActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>

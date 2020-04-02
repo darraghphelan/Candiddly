@@ -3,6 +3,7 @@ package com.example.candiddly
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -28,8 +29,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainCameraButton.setOnClickListener {
-            val intent = Intent(this, SenderActivity::class.java)
+            val intent = Intent(this, ConnectionActivity::class.java)
             startActivity(intent)
+            Toast.makeText(this, "Choose a friend to send!", Toast.LENGTH_LONG).show()
         }
 
         mDrawerLayout = findViewById(R.id.drawer_layout)
