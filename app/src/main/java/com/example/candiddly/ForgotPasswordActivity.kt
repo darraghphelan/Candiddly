@@ -1,20 +1,19 @@
 package com.example.candiddly
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_forgot_password.*
 
 class ForgotPasswordActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
     private lateinit var emailEditText: EditText
-
     private lateinit var resetPasswordButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,25 +23,27 @@ class ForgotPasswordActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         emailEditText = findViewById(R.id.forgotPasswordEmailEditText)
-
         resetPasswordButton = findViewById(R.id.forgotPasswordSendEmailButton)
 
         resetPasswordButton.setOnClickListener {
-            var email: String = emailEditText.text.toString()
+            val email: String = emailEditText.text.toString()
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(this, "Please enter email id", Toast.LENGTH_LONG).show()
+                displayError("Please enter email id","#ffcc0000")
             } else {
                 auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener(this, OnCompleteListener { task ->
+                    .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(this, "Reset link sent to your email", Toast.LENGTH_LONG)
-                                .show()
+                            displayError("Reset link sent to your email","#32CD32")
                         } else {
-                            Toast.makeText(this, "Unable to send reset mail", Toast.LENGTH_LONG)
-                                .show()
+                            displayError("Unable to send reset mail","#ffcc0000")
                         }
-                    })
+                    }
             }
         }
+    }
+
+    private fun displayError(message: String, color: String) {
+        messageTextView.text = message
+        messageTextView.setTextColor(Color.parseColor(color))
     }
 }

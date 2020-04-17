@@ -1,46 +1,84 @@
 package com.example.candiddly
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-
-    private lateinit var logoutButton: Button
-    private lateinit var updatePasswordButton: Button
+    private lateinit var mDrawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = FirebaseAuth.getInstance()
-
-        if(auth.currentUser == null){
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }else{
-            Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show()
-        }
-
         setContentView(R.layout.activity_main)
 
-        logoutButton = findViewById(R.id.logout_btn)
-        updatePasswordButton = findViewById(R.id.mainUpdatePasswordButton)
-
-        logoutButton.setOnClickListener{
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        val actionbar: ActionBar? = supportActionBar
+        actionbar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu)
         }
 
-        updatePasswordButton.setOnClickListener{
-            val intent = Intent(this, ResetPasswordActivity::class.java)
+        mainCameraButton.setOnClickListener {
+            val intent = Intent(this, ConnectionActivity::class.java)
             startActivity(intent)
+            Toast.makeText(this, "Choose a friend to send a candid!", Toast.LENGTH_LONG).show()
+        }
+
+        mDrawerLayout = findViewById(R.id.drawer_layout)
+
+        val navigationView: NavigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
+            mDrawerLayout.closeDrawers()
+
+            when (menuItem.itemId) {
+                R.id.mainStartEventButton -> {
+                    val intent = Intent(this, AssignFriendActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.mainConnectionsButton -> {
+                    val intent = Intent(this, ConnectionActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.mainUpdatePasswordButton -> {
+                    val intent = Intent(this, ResetPasswordActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.mainViewPicturesButton -> {
+                    val intent = Intent(this, ViewerActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.mainLogoutButton -> {
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+
+            true
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                mDrawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
+

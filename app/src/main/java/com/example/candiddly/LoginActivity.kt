@@ -1,15 +1,15 @@
 package com.example.candiddly
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -17,11 +17,9 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-
-    private lateinit var registerButton: Button
     private lateinit var loginButton: Button
-
     private lateinit var forgotPasswordTextView: TextView
+    private lateinit var loginTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,42 +27,46 @@ class LoginActivity : AppCompatActivity() {
 
         emailEditText = findViewById(R.id.loginEmailEditText)
         passwordEditText = findViewById(R.id.loginPasswordEditText)
-
-        registerButton = findViewById(R.id.loginRegisterButton)
         loginButton = findViewById(R.id.loginLoginButton)
-
         forgotPasswordTextView = findViewById(R.id.loginForgotPasswordTextView)
+        loginTextView = findViewById(R.id.loginRegisterTextView)
 
         auth = FirebaseAuth.getInstance()
 
         loginButton.setOnClickListener {
-            var email: String = emailEditText.text.toString()
-            var password: String = passwordEditText.text.toString()
+            messageTextView.text = ""
+            val email: String = emailEditText.text.toString()
+            val password: String = passwordEditText.text.toString()
 
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                Toast.makeText(this@LoginActivity, "Please fill all the fields", Toast.LENGTH_LONG).show()
-            } else{
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener { task ->
+                displayMessage("Please fill all the fields", "#ffcc0000")
+            } else {
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                     if(task.isSuccessful) {
-                        Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
+                        displayMessage("Successfully Logged In", "#32CD32")
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }else {
-                        Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
+                        displayMessage("Login Failed", "#ffcc0000")
                     }
-                })
+                }
             }
         }
 
-        registerButton.setOnClickListener{
-            val intent = Intent(this, RegisterActivity::class.java)
+        loginTextView.setOnClickListener{
+            messageTextView.text = ""
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
-        forgotPasswordTextView!!
-            .setOnClickListener { startActivity(Intent(this@LoginActivity,
-                ForgotPasswordActivity::class.java)) }
+        forgotPasswordTextView.setOnClickListener {
+            messageTextView.text = ""
+            startActivity(Intent(this@LoginActivity, ForgotPasswordActivity::class.java)) }
+    }
+
+    private fun displayMessage(message: String, color: String) {
+        messageTextView.text = message
+        messageTextView.setTextColor(Color.parseColor(color))
     }
 }
