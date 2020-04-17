@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_reset_password.*
 
@@ -47,7 +46,7 @@ class ResetPasswordActivity : AppCompatActivity() {
     }
 
     private fun displayError(message: String, color: String) {
-        errorTextView.text = message
-        errorTextView.setTextColor(Color.parseColor(color))
+        messageTextView.text = message
+        messageTextView.setTextColor(Color.parseColor(color))
     }
 }

@@ -18,8 +18,6 @@ import java.util.*
 
 class CameraActivity : AppCompatActivity() {
 
-    private val TAG = "CameraActivity"
-
     private var cameraKitView: CameraKitView? = null
 
     private lateinit var photoButton: FloatingActionButton
@@ -48,18 +46,20 @@ class CameraActivity : AppCompatActivity() {
                     val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
                     val currentDate = sdf.format(Date())
 
-                    val testImagesRef = storageRef.child("${user?.uid.toString()}/${currentDate}.jpg")
+                    val imagesRef = storageRef.child("${user?.uid.toString()}/${currentDate}.jpg")
 
-                    val uploadTask = testImagesRef.putBytes(photo)
+                    val uploadTask = imagesRef.putBytes(photo)
                     uploadTask
                         .addOnSuccessListener {
-                            testImagesRef.downloadUrl.addOnSuccessListener { downloadURL ->
-                                db.collection("users").document(receiverID).collection("gallery").document("images").update("images", FieldValue.arrayUnion("$downloadURL"))
+                            imagesRef.downloadUrl.addOnSuccessListener { downloadURL ->
+                                db.collection("users")
+                                    .document(receiverID)
+                                    .collection("gallery")
+                                    .document("images")
+                                    .update("images", FieldValue.arrayUnion("$downloadURL"))
                             }
                     }
-                        .addOnFailureListener {
-                            Log.d(TAG, "onFailureListener activated")
-                    }
+
                 } catch (e: IOException) {
                     e.printStackTrace()
                     Log.e("CKDemo", "Exception in photo callback")

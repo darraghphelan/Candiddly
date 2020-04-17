@@ -30,7 +30,7 @@
     <string name="i_am_the_host">I am the host</string>
     <string name="discover_my_friend">Discover my friend</string>
     <string name="you_will_be_taking_candids_of">Swipe down to refresh \n You will be taking candids of…</string>
-    <string name="enter_username_of_next_group_member">Enter username of next group member</string>
+    <string name="enter_username_of_each_group_member">Enter username of each group member</string>
     <string name="add">Add!</string>
     <string name="start">Start!</string>
     <string name="take_picture">Take Picture</string>

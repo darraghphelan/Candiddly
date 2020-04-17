@@ -17,10 +17,9 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-
     private lateinit var loginButton: Button
-
     private lateinit var forgotPasswordTextView: TextView
+    private lateinit var loginTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,49 +27,46 @@ class LoginActivity : AppCompatActivity() {
 
         emailEditText = findViewById(R.id.loginEmailEditText)
         passwordEditText = findViewById(R.id.loginPasswordEditText)
-
         loginButton = findViewById(R.id.loginLoginButton)
-
         forgotPasswordTextView = findViewById(R.id.loginForgotPasswordTextView)
+        loginTextView = findViewById(R.id.loginRegisterTextView)
 
         auth = FirebaseAuth.getInstance()
 
         loginButton.setOnClickListener {
-            errorTextView.text = ""
+            messageTextView.text = ""
             val email: String = emailEditText.text.toString()
             val password: String = passwordEditText.text.toString()
 
             if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                displayError("Please fill all the fields", "#ffcc0000")
-            } else{
+                displayMessage("Please fill all the fields", "#ffcc0000")
+            } else {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                     if(task.isSuccessful) {
-                        displayError("Successfully Logged In", "#32CD32")
+                        displayMessage("Successfully Logged In", "#32CD32")
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }else {
-                        displayError("Login Failed", "#ffcc0000")
+                        displayMessage("Login Failed", "#ffcc0000")
                     }
                 }
             }
         }
 
-        loginRegisterTextView.setOnClickListener{
-            errorTextView.text = ""
-            val intent = Intent(this, RegisterActivity::class.java)
+        loginTextView.setOnClickListener{
+            messageTextView.text = ""
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         forgotPasswordTextView.setOnClickListener {
-            errorTextView.text = ""
-            startActivity(Intent(this@LoginActivity,
-                ForgotPasswordActivity::class.java)) }
+            messageTextView.text = ""
+            startActivity(Intent(this@LoginActivity, ForgotPasswordActivity::class.java)) }
     }
 
-    private fun displayError(message: String, color: String) {
-        errorTextView.text = message
-        errorTextView.setTextColor(Color.parseColor(color))
+    private fun displayMessage(message: String, color: String) {
+        messageTextView.text = message
+        messageTextView.setTextColor(Color.parseColor(color))
     }
 }

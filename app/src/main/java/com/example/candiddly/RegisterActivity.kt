@@ -4,9 +4,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
@@ -18,8 +18,6 @@ import kotlinx.coroutines.tasks.await
 
 class RegisterActivity : AppCompatActivity() {
 
-    private val TAG = "RegisterActivity"
-
     private lateinit var auth: FirebaseAuth
     private val db = FirebaseFirestore.getInstance()
 
@@ -28,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
 
     private lateinit var registerButton: Button
-    private lateinit var loginButton: Button
+    private lateinit var loginTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +38,11 @@ class RegisterActivity : AppCompatActivity() {
         emailEditText = findViewById(R.id.registerEmailEditText)
         passwordEditText = findViewById(R.id.registerPasswordEditText)
 
-        loginButton = findViewById(R.id.registerLoginButton)
+        loginTextView = findViewById(R.id.registerLoginTextView)
         registerButton = findViewById(R.id.registerRegisterButton)
 
 
-        loginButton.setOnClickListener{
+        loginTextView.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
@@ -125,7 +123,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun displayError(message: String, color: String) {
-        errorTextView.text = message
-        errorTextView.setTextColor(Color.parseColor(color))
+        messageTextView.text = message
+        messageTextView.setTextColor(Color.parseColor(color))
     }
 }

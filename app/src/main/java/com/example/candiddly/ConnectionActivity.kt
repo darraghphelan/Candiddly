@@ -64,11 +64,11 @@ class ConnectionActivity : AppCompatActivity() {
                 }
             }
             itemsswipetorefresh.isRefreshing = false
-            errorTextView.text = ""
+            messageTextView.text = ""
         }
 
         addFriendButton.setOnClickListener {
-            errorTextView.text = ""
+            messageTextView.text = ""
             val username = usernameEditText.text.toString()
             usernameEditText.text.clear()
 
@@ -162,7 +162,7 @@ class ConnectionActivity : AppCompatActivity() {
             recyclerReceivedButton.isClickable = true
             recyclerSentButton.isEnabled = true
             recyclerSentButton.isClickable = true
-            errorTextView.text = ""
+            messageTextView.text = ""
         }
         recyclerReceivedButton.setOnClickListener {
             lifecycleScope.launch {
@@ -174,7 +174,7 @@ class ConnectionActivity : AppCompatActivity() {
             recyclerFriendsButton.isClickable = true
             recyclerSentButton.isEnabled = true
             recyclerSentButton.isClickable = true
-            errorTextView.text = ""
+            messageTextView.text = ""
         }
         recyclerSentButton.setOnClickListener {
             lifecycleScope.launch {
@@ -186,7 +186,7 @@ class ConnectionActivity : AppCompatActivity() {
             recyclerFriendsButton.isClickable = true
             recyclerReceivedButton.isEnabled = true
             recyclerReceivedButton.isClickable = true
-            errorTextView.text = ""
+            messageTextView.text = ""
         }
     }
 
@@ -219,11 +219,6 @@ class ConnectionActivity : AppCompatActivity() {
             }
             "sent" -> {
                 adapter = ConnectionRecyclerAdapter(connectionList) { user ->
-                val intent = Intent(this, PopUpWindow::class.java)
-                intent.putExtra("popuptext", "Do you want to delete this request?")
-                    intent.putExtra("type", "sent")
-                    intent.putExtra("id", user.id)
-                startActivity(intent)
                 }
             }
         }
@@ -286,7 +281,7 @@ class ConnectionActivity : AppCompatActivity() {
     }
 
     private fun displayMessage(message: String, color: String) {
-        errorTextView.text = message
-        errorTextView.setTextColor(Color.parseColor(color))
+        messageTextView.text = message
+        messageTextView.setTextColor(Color.parseColor(color))
     }
 }

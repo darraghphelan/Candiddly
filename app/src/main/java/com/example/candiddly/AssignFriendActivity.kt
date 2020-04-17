@@ -41,7 +41,7 @@ class AssignFriendActivity : AppCompatActivity() {
             assignFriendAddButton.visibility = View.VISIBLE
             assignFriendStartButton.visibility = View.VISIBLE
             assignFriendTextView.visibility = View.GONE
-            errorTextView.text = ""
+            messageTextView.text = ""
         }
 
         assignFriendMemberButton.setOnClickListener{
@@ -53,13 +53,13 @@ class AssignFriendActivity : AppCompatActivity() {
             assignFriendAddButton.visibility = View.GONE
             assignFriendStartButton.visibility = View.GONE
             assignFriendTextView.visibility = View.VISIBLE
-            errorTextView.text = ""
+            messageTextView.text = ""
         }
 
         assignFriendAddButton.setOnClickListener{
             val username = assignFriendUsernameEditText.text.toString()
             assignFriendUsernameEditText.text.clear()
-            errorTextView.text = ""
+            messageTextView.text = ""
 
             lifecycleScope.launch {
                 val memberDoc = docRefUsers
@@ -67,7 +67,7 @@ class AssignFriendActivity : AppCompatActivity() {
                     .get()
                     .await()
                 if (memberDoc.isEmpty) {
-                    displayError("No user $username exists, please try again")
+                    displayMessage("No user $username exists, please try again")
                     return@launch
                 } else {
                     for (doc in memberDoc) {
@@ -83,7 +83,7 @@ class AssignFriendActivity : AppCompatActivity() {
         }
 
         assignFriendStartButton.setOnClickListener {
-            errorTextView.text = ""
+            messageTextView.text = ""
             var groupList: MutableList<String>
             lifecycleScope.launch {
                 val document = db.collection("users")
@@ -131,12 +131,12 @@ class AssignFriendActivity : AppCompatActivity() {
                 }
             }
 
-            val mNotificationTime = Calendar.getInstance().timeInMillis  + 1200000 + random.nextInt(73-12) * 100000
-            NotificationUtils().setNotification(mNotificationTime, this)
+            val notificationTime = Calendar.getInstance().timeInMillis  + 1200000 + random.nextInt(73-12) * 100000
+            NotificationUtils().setNotification(notificationTime, this)
         }
 
         itemsswipetorefresh.setOnRefreshListener {
-            errorTextView.text = ""
+            messageTextView.text = ""
             assignFriendStartButton.performClick()
             itemsswipetorefresh.isRefreshing = false
         }
@@ -157,7 +157,7 @@ class AssignFriendActivity : AppCompatActivity() {
         docRef.update(updates)
     }
 
-    private fun displayError(message: String) {
-        errorTextView.text = message
+    private fun displayMessage(message: String) {
+        messageTextView.text = message
     }
 }
