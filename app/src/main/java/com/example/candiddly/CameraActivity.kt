@@ -38,7 +38,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private val photoListener = View.OnClickListener { view ->
-        val receiverID: String = intent.getStringExtra("ReceiverID")
+        val receiverID: String = intent.getStringExtra("ReceiverID").toString()
 
             cameraKitView!!.captureImage { cameraKitView, photo ->
                 try {

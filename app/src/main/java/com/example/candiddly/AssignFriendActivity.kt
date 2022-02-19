@@ -131,7 +131,7 @@ class AssignFriendActivity : AppCompatActivity() {
                 }
             }
 
-            val notificationTime = Calendar.getInstance().timeInMillis  + 1200000 + random.nextInt(73-12) * 100000
+            val notificationTime = Calendar.getInstance().timeInMillis  + 1200 //000 + random.nextInt(73-12) * 100000
             NotificationUtils().setNotification(notificationTime, this)
         }
 

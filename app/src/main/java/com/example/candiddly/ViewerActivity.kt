@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -114,10 +115,10 @@ class ViewerActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             idList = getImageUrls()
-            glide(idList)
         }
         viewerNextButton.setOnClickListener{
             glide(idList)
+            ViewerTextView.visibility = TextView.INVISIBLE
         }
     }
 
