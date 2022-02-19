@@ -7,11 +7,11 @@ the project. This is a simple user guide for those testing the functionality of 
 1. Login and Registration is the same as a standard application. It will ask for an email address and password
 as well as a username for registration.
 
-2. To take and send photographs with the application, tap the floating camera button at the bottom right 
-of the main screen. This will take you to a list of friends you can choose to send the photograph to. When 
+2. To take and send pictures with the application, tap the floating camera button at the bottom right 
+of the main screen. This will take you to a list of friends you can choose to send the picture to. When 
 you tap on the cell it will take you to the camera screen. The capture button will take a picture and 
-immediately send it to the recipient you chose on the previous screen. The sender does not get to choose 
-which pictures are sent, all of them are.
+immediately send it to the recipient you chose on the previous screen. The sender does not get a preview
+of the picture, this allows more pictures to be sent.
 
 3. To view your connections i.e. your lists of friends, your sent friend requests and received friends
 request, tap the hamburger icon at the top left of the main screen and choose 'Connections'. 
@@ -19,18 +19,16 @@ request, tap the hamburger icon at the top left of the main screen and choose 'C
 4. You can add friends by entering their usernames in the text field and tapping the 'Add friend' button.
 Refreshing the page by dragging down will update the appropriate lists.
 
-5. To start an event, every user must choose the 'Start and Event' button after pressing the hamburger icon
+5. To make a group, everyone participating must choose the 'Create a group' button after pressing the hamburger icon
 and one user must be designated as the host. This person adds all the usernames and pressing the 'Add!' 
 button after each one. When the host is finished, they must hit the 'Start' button. Every group member must 
-then go to the 'Discover my friend' section to see who they must take a candid photograph of for the event.
+then go to the 'Results' section to see who they must take a candid photograph of.
 
 6. To view the photographs others have sent you, choose the 'View Your Pictures' option after pressing the
-hamburger icon. If there are images to view then they will appear, else it will be a blank screen. Cycle 
-through the list by hitting the 'Next' button and 'Save the images to a dedicated folder using the 'Save'
-button.
+hamburger icon. If there are images to view then you can cycle through them by hitting the 'Next' button 
+and Save the images to a dedicated folder using the 'Save' button.
 
-To aid in testing some of the applications features four accounts have been made. Certain features require
-your own account, however. 
+To aid in testing some of the applications features four accounts have been made.
 
 These accounts are:
 Email: a@a.com
