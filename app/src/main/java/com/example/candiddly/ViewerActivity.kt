@@ -102,7 +102,7 @@ class ViewerActivity : AppCompatActivity() {
 
             val deleteRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
 
-            deleteRef.delete()
+
 
             db.collection("users")
                 .document(user?.uid.toString())
@@ -111,6 +111,7 @@ class ViewerActivity : AppCompatActivity() {
                 .update("images", FieldValue.arrayRemove(imageUrl))
 
             idList = idList.drop(1)
+            deleteRef.delete()
         }
 
         lifecycleScope.launch {
