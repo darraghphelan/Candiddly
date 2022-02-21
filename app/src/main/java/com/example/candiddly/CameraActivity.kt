@@ -53,7 +53,7 @@ class CameraActivity : AppCompatActivity() {
 
                     val bitmap = BitmapFactory.decodeByteArray(capture, 0, capture.size)
                     val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos)
 
                     val photo = baos.toByteArray()
 
